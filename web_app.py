@@ -1,15 +1,21 @@
 import streamlit as st
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # FIX for deployment
 import matplotlib.pyplot as plt
 import math
 
+# Page settings
 st.set_page_config(page_title="Trigofy", layout="centered")
 
+# Title
 st.title("🔺 Trigofy")
 st.subheader("Learn Trigonometry Visually")
 
+# Input
 angle = st.number_input("Enter angle (degrees):", value=30.0)
 
+# Function selection
 func = st.radio("Choose function:", ["sin", "cos", "tan"])
 
 r = math.radians(angle)
@@ -28,15 +34,22 @@ elif func == "tan":
     concept = "Tangent = opposite / adjacent"
     real = "Used in height and distance"
 
-# Display result
-st.markdown("### Result")
+# Result
+st.markdown("### 📊 Result")
 st.success(f"{func}({angle}) = {round(value, 4)}")
 
-st.markdown("### Concept")
-st.info(concept)
+# Explanation
+st.markdown("### 📘 Explanation")
+st.markdown(f"""
+**Angle:** {angle}°  
+**Radians:** {round(r, 4)}  
 
-st.markdown("### Real-life use")
-st.write(real)
+**Concept:**  
+{concept}  
+
+**Real-life use:**  
+{real}  
+""")
 
 # Graph
 x = np.linspace(0, 360, 200)
