@@ -1,21 +1,13 @@
 import streamlit as st
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')  # FIX for deployment
-import matplotlib.pyplot as plt
 import math
 
-# Page settings
 st.set_page_config(page_title="Trigofy", layout="centered")
 
-# Title
 st.title("🔺 Trigofy")
 st.subheader("Learn Trigonometry Visually")
 
-# Input
 angle = st.number_input("Enter angle (degrees):", value=30.0)
-
-# Function selection
 func = st.radio("Choose function:", ["sin", "cos", "tan"])
 
 r = math.radians(angle)
@@ -51,7 +43,7 @@ st.markdown(f"""
 {real}  
 """)
 
-# Graph
+# Graph (NO matplotlib)
 x = np.linspace(0, 360, 200)
 x_rad = np.radians(x)
 
@@ -62,11 +54,4 @@ elif func == "cos":
 else:
     y = np.tan(x_rad)
 
-fig, ax = plt.subplots()
-ax.plot(x, y)
-ax.set_title(f"{func}(x) graph")
-ax.set_xlabel("Degrees")
-ax.set_ylabel("Value")
-ax.grid()
-
-st.pyplot(fig)
+st.line_chart({"x": x, "y": y})
