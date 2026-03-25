@@ -1,13 +1,26 @@
 import streamlit as st
 import numpy as np
 import math
+import pandas as pd
 
+# Page setup
 st.set_page_config(page_title="Trigofy", layout="centered")
 
-st.title("🔺 Trigofy")
-st.subheader("Learn Trigonometry Visually")
+# Custom title (better UI)
+st.markdown(
+    "<h1 style='text-align: center; color: #ef4444;'>🔺 Trigofy</h1>",
+    unsafe_allow_html=True
+)
 
+st.markdown(
+    "<p style='text-align: center;'>Learn Trigonometry Visually</p>",
+    unsafe_allow_html=True
+)
+
+# Input
 angle = st.number_input("Enter angle (degrees):", value=30.0)
+
+# Function selection
 func = st.radio("Choose function:", ["sin", "cos", "tan"])
 
 r = math.radians(angle)
@@ -43,7 +56,7 @@ st.markdown(f"""
 {real}  
 """)
 
-# Graph (NO matplotlib)
+# Graph
 x = np.linspace(0, 360, 200)
 x_rad = np.radians(x)
 
@@ -54,4 +67,29 @@ elif func == "cos":
 else:
     y = np.tan(x_rad)
 
-st.line_chart({"x": x, "y": y})
+# Data for graph
+data = pd.DataFrame({
+    "Degrees": x,
+    "Value": y
+})
+
+st.markdown("### 📈 Graph")
+st.line_chart(data.set_index("Degrees"))
+
+# Highlight selected point
+st.markdown("### 📍 Selected Point")
+st.info(f"({angle}, {round(value, 4)})")
+
+# Why it matters
+st.markdown("### 🌍 Why this matters")
+st.write(
+    "Trigonometry is used in physics, engineering, navigation, "
+    "architecture, and even game development."
+)
+
+# Footer
+st.markdown("---")
+st.markdown(
+    "<p style='text-align: center; color: gray;'>Created by NAV</p>",
+    unsafe_allow_html=True
+)
